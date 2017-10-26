@@ -7,6 +7,12 @@
  *
  * Date: 2017-09-03T12:52:44.102Z
  */
+/*!
+ * Modded by Aysh Su @ 2017-09-21
+ * Changes:
+ *   - Add 'cropperdoneresize' callback option
+ */
+/* eslint-disable */
 
 var DEFAULTS = {
   // Define the view mode of the cropper
@@ -101,6 +107,7 @@ var DEFAULTS = {
   cropmove: null,
   cropend: null,
   crop: null,
+  cropperdoneresize: null,
   zoom: null
 };
 
@@ -1526,6 +1533,10 @@ var handlers = {
         self.setCropBoxData(each(cropBoxData, function (n, i) {
           cropBoxData[i] = n * ratio;
         }));
+      }
+
+      if (isFunction(options.cropperdoneresize)) {
+        options.cropperdoneresize();
       }
     }
   },
@@ -3476,10 +3487,5 @@ extend(Cropper.prototype, events);
 extend(Cropper.prototype, handlers);
 extend(Cropper.prototype, change);
 extend(Cropper.prototype, methods);
-
-if (typeof window !== 'undefined') {
-  AnotherCropper = window.Cropper;
-  window.Cropper = Cropper;
-}
 
 export default Cropper;
